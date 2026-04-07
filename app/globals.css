@@ -1,0 +1,74 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap');
+
+* { font-family: 'Manrope', system-ui, sans-serif; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.glass {
+  background: linear-gradient(180deg, rgba(30,38,45,0.85), rgba(22,27,33,0.85));
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05);
+}
+.pill {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+}
+.neon { box-shadow: 0 0 18px rgba(45,220,255,0.35); }
+.gradient-btn { background: linear-gradient(180deg, #36e3ff 0%, #1aa5ff 60%, #0f6bff 100%); }
+.gradient-btn:hover { filter: brightness(1.12); }
+.muted { color: rgba(255,255,255,0.5); }
+.panel-title { color: rgba(255,255,255,0.85); }
+
+.bar-cyan {
+  background: linear-gradient(90deg, #2ee6ff, #4aa0ff);
+  border-radius: 4px;
+  transition: width 0.7s ease;
+  box-shadow: 0 0 10px rgba(46,230,255,0.25);
+}
+.bar-yellow {
+  background: linear-gradient(90deg, #ffd500, #f0c400);
+  border-radius: 4px;
+  transition: width 0.7s ease;
+  box-shadow: 0 0 8px rgba(255,213,0,0.15);
+}
+.bar-blue { background: linear-gradient(90deg, #38d7ff, #1aa5ff); }
+
+.pill-input {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 10px 14px;
+  color: rgba(255,255,255,0.9);
+  font-size: 15px;
+  font-weight: 600;
+  outline: none;
+  margin-bottom: 10px;
+  width: 100%;
+}
+.pill-input:focus {
+  border-color: rgba(56,215,255,0.3);
+  box-shadow: 0 0 0 2px rgba(56,215,255,0.08);
+}
+.field-label {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.2);
+  margin-bottom: 4px;
+  font-weight: 700;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; }
+input[type="number"] { -moz-appearance: textfield; }
+::selection { background: rgba(56,215,255,0.2); }
