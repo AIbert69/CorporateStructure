@@ -1,41 +1,40 @@
 export async function POST(req) {
-  const { system, prompt } = await req.json();
+    const { system, prompt } = await req.json();
 
-  if (!process.env.ANTHROPIC_API_KEY) {
-    return Response.json(
-      { error: "ANTHROPIC_API_KEY not configured" },
-      { status: 500 }
-    );
+  if (!process.env.AI_GATEWAY_API_KEY) {
+        return Response.json(
+          { error: "AI_GATEWAY_API_KEY not configured" },
+          { status: 500 }
+              );
   }
 
   try {
-    const res = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": process.env.ANTHROPIC_API_KEY,
-        "anthropic-version": "2023-06-01",
-      },
-      body: JSON.stringify({
-        model: "claude-sonnet-4-20250514",
-        max_tokens: 4000,
-        system,
-        messages: [{ role: "user", content: prompt }],
-      }),
-    });
+        const res = await fetch("https://ai-gateway.vercel.sh/v1/chat/completions", {
+                method: "POST",
+                headers: {
+                          "Content-Type": "application/json",
+                          "Authorization": `Bearer ${process.env.AI_GATEWAY_API_KEY}`,
+                },
+                body: JSON.stringify({
+                          model: "anthropic/claude-sonnet-4-5",
+                          max_tokens: 4000,
+                          messages: [
+                            { role: "system", content: system },
+                            { role: "user", content: prompt }
+                                    ],
+                }),
+        });
 
-    const data = await res.json();
+      const data = await res.json();
 
-    if (data.error) {
-      return Response.json({ error: data.error.message }, { status: 400 });
-    }
+      if (data.error) {
+              return Response.json({ error: data.error.message }, { status: 400 });
+      }
 
-    const text = data.content
-      ?.map((b) => (b.type === "text" ? b.text : ""))
-      .join("\n") || "";
+      const text = data.choices?.[0]?.message?.content || "";
 
-    return Response.json({ text });
+      return Response.json({ text });
   } catch (e) {
-    return Response.json({ error: e.message }, { status: 500 });
+        return Response.json({ error: e.message }, { status: 500 });
   }
 }
